@@ -7,9 +7,12 @@ CREATE TABLE Users (
     full_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
     phone_number VARCHAR(20),
     profile_picture_url VARCHAR(255),
-    total_balance DECIMAL(15, 2) DEFAULT 0.00
+    total_balance DECIMAL(15, 2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 -------------------------------------------------------------------------------

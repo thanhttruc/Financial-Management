@@ -24,6 +24,9 @@ export class User {
   @Column({ length: 50, unique: true })
   username: string;
 
+  @Column({ select: false }) // Không select password mặc định
+  password: string;
+
   @Column({ name: 'phone_number', length: 20, nullable: true })
   phoneNumber: string;
 

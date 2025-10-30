@@ -1,11 +1,18 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ENV } from '../config/env';
 
 export const Navigation: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path: string) => location.pathname === path;
+  const isAuthenticated = localStorage.getItem('token');
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
 
   const navItems = [
     { path: '/', label: 'Trang chủ', icon: '🏠' },
@@ -40,6 +47,24 @@ export const Navigation: React.FC = () => {
                 </Link>
               ))}
             </div>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            {isAuthenticated ? (
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+              >
+                Đăng xuất
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+              >
+                Đăng nhập
+              </Link>
+            )}
           </div>
         </div>
       </div>

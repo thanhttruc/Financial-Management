@@ -56,7 +56,7 @@ Chỉnh sửa file `.env` với thông tin database của bạn:
 DB_HOST=localhost
 DB_PORT=3306
 DB_USERNAME=root
-DB_PASSWORD=your_password
+DB_PASSWORD=trucdang02
 DB_DATABASE=financial
 ```
 
@@ -82,7 +82,7 @@ File `.env`:
 DB_HOST=localhost
 DB_PORT=3306
 DB_USERNAME=root
-DB_PASSWORD=
+DB_PASSWORD= trucdang02
 DB_DATABASE=financial
 
 # Server
@@ -90,7 +90,7 @@ PORT=8000
 NODE_ENV=development
 
 # CORS
-CORS_ORIGIN=http://localhost:3000
+CORS_ORIGIN=http://localhost:5174
 ```
 
 ### TypeORM Configuration

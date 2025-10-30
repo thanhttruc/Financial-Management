@@ -8,7 +8,7 @@ async function bootstrap() {
 
   // Cấu hình CORS
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+    origin: process.env.CORS_ORIGIN || 'http://localhost:5174',
     credentials: true,
   });
 
@@ -21,11 +21,15 @@ async function bootstrap() {
     }),
   );
 
+  // Global prefix cho tất cả API endpoints
+  app.setGlobalPrefix('api');
+
   // Cấu hình Swagger
   const config = new DocumentBuilder()
     .setTitle('Financial Management API')
     .setDescription('API documentation cho ứng dụng quản lý tài chính')
     .setVersion('1.0')
+    .addTag('auth', 'API xác thực')
     .addTag('users', 'API quản lý người dùng')
     .addTag('accounts', 'API quản lý tài khoản')
     .addTag('transactions', 'API quản lý giao dịch')
@@ -37,7 +41,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  const port = process.env.PORT || 8000;
+  const port = 8000;
   await app.listen(port);
   console.log(`🚀 Server đang chạy tại: http://localhost:${port}`);
   console.log(`📚 Swagger API docs: http://localhost:${port}/api`);

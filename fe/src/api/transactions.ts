@@ -1,29 +1,59 @@
 import { axiosInstance } from './axiosInstance';
-import type { ApiResponse, PaginatedResponse } from './types';
+import type { ApiResponse } from './types';
+
+export type TransactionType = 'Revenue' | 'Expense';
+export type TransactionFilterType = 'All' | 'Revenue' | 'Expense';
 
 export interface Transaction {
-  id: number;
-  amount: number;
-  type: 'income' | 'expense';
-  description: string;
-  date: string;
-  categoryId: number;
+  transactionId: number;
   accountId: number;
+  transactionDate: string;
+  type: TransactionType;
+  itemDescription: string;
+  shopName: string;
+  amount: number;
+  paymentMethod: string;
+  status: 'Complete' | 'Pending' | 'Failed';
+  receiptId: string | null;
   createdAt: string;
-  updatedAt: string;
+}
+
+export interface GetTransactionsResponse {
+  data: Transaction[];
+  total: number;
+  hasMore: boolean;
+}
+
+export interface CreateTransactionRequest {
+  accountId: number;
+  transactionDate: string; // ISO string
+  type: TransactionType;
+  itemDescription: string;
+  shopName?: string;
+  amount: number;
+  paymentMethod?: string;
+  status?: 'Complete' | 'Pending' | 'Failed';
 }
 
 /**
  * Lấy danh sách giao dịch
  */
 export const getTransactions = async (
-  page: number = 1,
-  limit: number = 10
-): Promise<PaginatedResponse<Transaction>> => {
-  const response = await axiosInstance.get<ApiResponse<PaginatedResponse<Transaction>>>(
-    `/transactions?page=${page}&limit=${limit}`
+  type: TransactionFilterType = 'All',
+  limit: number = 10,
+  offset: number = 0
+): Promise<GetTransactionsResponse> => {
+  const params = new URLSearchParams();
+  if (type !== 'All') {
+    params.append('type', type);
+  }
+  params.append('limit', limit.toString());
+  params.append('offset', offset.toString());
+
+  const response = await axiosInstance.get<GetTransactionsResponse>(
+    `/v1/transactions?${params.toString()}`
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
@@ -31,7 +61,7 @@ export const getTransactions = async (
  */
 export const getTransaction = async (id: number): Promise<Transaction> => {
   const response = await axiosInstance.get<ApiResponse<Transaction>>(
-    `/transactions/${id}`
+    `/v1/transactions/${id}`
   );
   return response.data.data;
 };
@@ -40,13 +70,13 @@ export const getTransaction = async (id: number): Promise<Transaction> => {
  * Tạo giao dịch mới
  */
 export const createTransaction = async (
-  data: Omit<Transaction, 'id' | 'createdAt' | 'updatedAt'>
-): Promise<Transaction> => {
+  data: CreateTransactionRequest
+): Promise<ApiResponse<Transaction>> => {
   const response = await axiosInstance.post<ApiResponse<Transaction>>(
-    '/transactions',
+    '/v1/transactions',
     data
   );
-  return response.data.data;
+  return response.data;
 };
 
 /**
@@ -57,7 +87,7 @@ export const updateTransaction = async (
   data: Partial<Transaction>
 ): Promise<Transaction> => {
   const response = await axiosInstance.put<ApiResponse<Transaction>>(
-    `/transactions/${id}`,
+    `/v1/transactions/${id}`,
     data
   );
   return response.data.data;
@@ -67,5 +97,5 @@ export const updateTransaction = async (
  * Xóa giao dịch
  */
 export const deleteTransaction = async (id: number): Promise<void> => {
-  await axiosInstance.delete<ApiResponse<void>>(`/transactions/${id}`);
+  await axiosInstance.delete<ApiResponse<void>>(`/v1/transactions/${id}`);
 };

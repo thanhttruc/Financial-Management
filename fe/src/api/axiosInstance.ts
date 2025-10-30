@@ -36,9 +36,16 @@ axiosInstance.interceptors.response.use(
   (error) => {
     // Xử lý lỗi toàn cục
     if (error.response?.status === 401) {
-      // Unauthorized - xóa token và redirect về login
-      localStorage.removeItem('token');
-      window.location.href = '/login';
+      // Chỉ xóa token nếu KHÔNG phải lỗi từ endpoint /auth/login hoặc /auth/register
+      // Vì khi đăng nhập/đăng ký sai, 401 là bình thường và không cần xóa token
+      const url = error.config?.url || '';
+      const isAuthEndpoint = url.includes('/auth/login') || url.includes('/auth/register');
+      
+      if (!isAuthEndpoint) {
+        // Token đã hết hạn hoặc không hợp lệ cho các API khác
+        localStorage.removeItem('token');
+        // Không redirect tự động ở đây, để component tự xử lý
+      }
     }
     return Promise.reject(error);
   }

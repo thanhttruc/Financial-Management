@@ -14,6 +14,8 @@ import { Goal } from './modules/goal/entities/goal.entity';
 
 // Import controllers
 import { AppController } from './app.controller';
+import { AuthModule } from './modules/auth/auth.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
 
 @Module({
   imports: [
@@ -22,6 +24,12 @@ import { AppController } from './app.controller';
       isGlobal: true,
       load: [databaseConfig],
     }),
+
+    // Import Auth Module
+    AuthModule,
+
+    // Import Transaction Module
+    TransactionModule,
 
     // Cấu hình TypeORM
     TypeOrmModule.forRootAsync({
