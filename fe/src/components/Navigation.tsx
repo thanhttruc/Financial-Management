@@ -15,11 +15,13 @@ export const Navigation: React.FC = () => {
   };
 
   const navItems = [
-    { path: '/', label: 'Trang chủ', icon: '🏠' },
-    { path: '/transactions', label: 'Giao dịch', icon: '💰' },
-    { path: '/accounts', label: 'Tài khoản', icon: '💳' },
-    { path: '/categories', label: 'Danh mục', icon: '📁' },
-    { path: '/goals', label: 'Mục tiêu', icon: '🎯' },
+    { path: '/', label: 'Home', icon: '🏠' },
+    { path: '/transactions', label: 'Transactions', icon: '💰' },
+    { path: '/accounts', label: 'Accounts', icon: '💳' },
+    // { path: '/categories', label: 'Categories', icon: '📁' },
+    { path: '/goals', label: 'Goals', icon: '🎯' },
+    { path: '/bills', label: 'Bills', icon: '🧾' },
+    { path: '/expenses', label: 'Expenses', icon: '📉' },
   ];
 
   return (
@@ -55,14 +57,14 @@ export const Navigation: React.FC = () => {
                 onClick={handleLogout}
                 className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
               >
-                Đăng xuất
+                Logout
               </button>
             ) : (
               <Link
                 to="/login"
                 className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
               >
-                Đăng nhập
+                Login
               </Link>
             )}
           </div>

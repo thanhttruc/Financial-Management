@@ -8,46 +8,46 @@ export const HomePage: React.FC = () => {
       <div className="max-w-7xl mx-auto py-8 px-4">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            Chào mừng đến với Quản lý Tài chính
+            Welcome to Financial Management
           </h1>
           <p className="text-gray-600 text-lg">
-            Quản lý thu chi một cách thông minh và hiệu quả
+            Manage your income and expenses smartly and efficiently
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card title="💰 Tổng thu nhập" className="border-l-4 border-green-500">
+          <Card title="💰 Total Income" className="border-l-4 border-green-500">
             <div className="text-3xl font-bold text-green-600">0 VNĐ</div>
-            <p className="text-sm text-gray-500 mt-2">Tháng này</p>
+            <p className="text-sm text-gray-500 mt-2">This month</p>
           </Card>
 
-          <Card title="💸 Tổng chi tiêu" className="border-l-4 border-red-500">
+          <Card title="💸 Total Expenses" className="border-l-4 border-red-500">
             <div className="text-3xl font-bold text-red-600">0 VNĐ</div>
-            <p className="text-sm text-gray-500 mt-2">Tháng này</p>
+            <p className="text-sm text-gray-500 mt-2">This month</p>
           </Card>
 
-          <Card title="📊 Số dư" className="border-l-4 border-blue-500">
+          <Card title="📊 Balance" className="border-l-4 border-blue-500">
             <div className="text-3xl font-bold text-blue-600">0 VNĐ</div>
-            <p className="text-sm text-gray-500 mt-2">Hiện tại</p>
+            <p className="text-sm text-gray-500 mt-2">Current</p>
           </Card>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card title="📋 Giao dịch gần đây">
+          <Card title="📋 Recent Transactions">
             <p className="text-gray-500 text-center py-8">
-              Chưa có giao dịch nào
+              No transactions yet
             </p>
             <Button variant="primary" className="w-full">
-              Thêm giao dịch mới
+              Add New Transaction
             </Button>
           </Card>
 
-          <Card title="🎯 Mục tiêu tài chính">
+          <Card title="🎯 Financial Goals">
             <p className="text-gray-500 text-center py-8">
-              Chưa có mục tiêu nào
+              No goals yet
             </p>
             <Button variant="secondary" className="w-full">
-              Tạo mục tiêu mới
+              Create New Goal
             </Button>
           </Card>
         </div>

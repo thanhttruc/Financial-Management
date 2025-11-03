@@ -1,5 +1,5 @@
 -- Tạo database
-CREATE DATABASE financial;
+-- CREATE DATABASE financial;
 USE financial;
 -- 1. Bảng Users (Người Dùng)
 CREATE TABLE Users (
@@ -15,7 +15,7 @@ CREATE TABLE Users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--------------------------------------------------------------------------------
+
 
 -- 2. Bảng Accounts (Tài Khoản)`
 CREATE TABLE Accounts (
@@ -30,7 +30,6 @@ CREATE TABLE Accounts (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
--------------------------------------------------------------------------------
 
 -- 3. Bảng Transactions (Giao Dịch)
 CREATE TABLE Transactions (
@@ -47,7 +46,6 @@ CREATE TABLE Transactions (
     FOREIGN KEY (account_id) REFERENCES Accounts(account_id)
 );
 
--------------------------------------------------------------------------------
 
 -- 4. Bảng Categories (Danh Mục Chi Tiêu)
 CREATE TABLE Categories (
@@ -56,7 +54,6 @@ CREATE TABLE Categories (
     -- Ví dụ: Housing, Food, Transportation, Entertainment, Shopping, Others
 );
 
--------------------------------------------------------------------------------
 
 -- 5. Bảng ExpenseDetails (Chi Tiết Chi Tiêu)
 -- Bảng này liên kết giao dịch chi tiêu với danh mục
@@ -71,7 +68,6 @@ CREATE TABLE ExpenseDetails (
     FOREIGN KEY (category_id) REFERENCES Categories(category_id)
 );
 
--------------------------------------------------------------------------------
 
 -- 6. Bảng Bills (Hóa Đơn Sắp Tới)
 CREATE TABLE Bills (
@@ -85,7 +81,6 @@ CREATE TABLE Bills (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
--------------------------------------------------------------------------------
 
 -- 7. Bảng Goals (Mục Tiêu Tiết Kiệm/Chi Tiêu)
 CREATE TABLE Goals (

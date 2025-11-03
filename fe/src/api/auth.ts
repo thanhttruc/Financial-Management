@@ -49,9 +49,14 @@ export interface LoginResponse {
 export const register = async (data: RegisterRequest): Promise<RegisterResponse> => {
   const response = await axiosInstance.post<RegisterResponse>('/auth/register', data);
   
-  // Lưu token vào localStorage
+  // Lưu token và userId vào localStorage
   if (response.data.token) {
-    localStorage.setItem('token', response.data.token);
+    const token = response.data.token.trim();
+    localStorage.setItem('token', token);
+    console.log('[Auth] Token saved from register:', token.substring(0, 20) + '...');
+  }
+  if (response.data.user?.id) {
+    localStorage.setItem('userId', response.data.user.id.toString());
   }
   
   return response.data;
@@ -63,9 +68,18 @@ export const register = async (data: RegisterRequest): Promise<RegisterResponse>
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const response = await axiosInstance.post<LoginResponse>('/auth/login', data);
   
-  // Lưu token vào localStorage
+  // Lưu token và userId vào localStorage
   if (response.data.accessToken) {
-    localStorage.setItem('token', response.data.accessToken);
+    const token = response.data.accessToken.trim();
+    localStorage.setItem('token', token);
+    console.log('[Auth] Token saved from login:', token.substring(0, 20) + '...');
+    console.log('[Auth] Full token length:', token.length);
+  } else {
+    console.error('[Auth] No accessToken in login response:', response.data);
+  }
+  
+  if (response.data.user?.id) {
+    localStorage.setItem('userId', response.data.user.id.toString());
   }
   
   return response.data;

@@ -18,12 +18,31 @@ axiosInstance.interceptors.request.use(
   (config) => {
     // Thêm token nếu có
     const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    
+    if (token && token.trim()) {
+      // Đảm bảo config.headers tồn tại
+      if (!config.headers) {
+        config.headers = {} as any;
+      }
+      
+      // Set Authorization header với format Bearer token
+      const cleanToken = token.trim();
+      config.headers.Authorization = `Bearer ${cleanToken}`;
+      
+      // Log để debug (có thể xóa sau)
+      console.log('[Axios] Token added to request:', {
+        url: config.url,
+        hasToken: !!cleanToken,
+        tokenLength: cleanToken.length,
+      });
+    } else {
+      console.warn('[Axios] No token found in localStorage for request:', config.url);
     }
+    
     return config;
   },
   (error) => {
+    console.error('[Axios] Request interceptor error:', error);
     return Promise.reject(error);
   }
 );

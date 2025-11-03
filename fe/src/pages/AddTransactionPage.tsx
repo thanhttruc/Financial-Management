@@ -15,6 +15,9 @@ export const AddTransactionPage: React.FC = () => {
     amount: 0,
     paymentMethod: '',
     status: 'Complete',
+    categoryId: undefined,
+    subCategoryName: '',
+    subCategoryAmount: undefined,
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,13 +28,17 @@ export const AddTransactionPage: React.FC = () => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
-      [name]: name === 'amount' || name === 'accountId' ? Number(value) : value,
+      [name]: name === 'amount' || name === 'accountId' || name === 'categoryId' || name === 'subCategoryAmount'
+        ? (value === '' ? undefined : Number(value))
+        : value,
     }));
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target; // yyyy-mm-dd
-    const iso = new Date(value + 'T00:00:00').toISOString();
+    // Tạo date ở UTC midnight để tránh timezone conversion
+    // value = "2024-11-01" -> "2024-11-01T00:00:00.000Z"
+    const iso = `${value}T00:00:00.000Z`;
     setForm((prev) => ({ ...prev, transactionDate: iso }));
   };
 
@@ -49,6 +56,12 @@ export const AddTransactionPage: React.FC = () => {
         amount: Number(form.amount),
         paymentMethod: form.paymentMethod || undefined,
         status: form.status,
+        // Chỉ gửi expense detail fields nếu type = Expense
+        ...(form.type === 'Expense' && {
+          categoryId: form.categoryId,
+          subCategoryName: form.subCategoryName || undefined,
+          subCategoryAmount: form.subCategoryAmount,
+        }),
       };
       const res = await createTransaction(payload);
       if (res.success) {
@@ -147,6 +160,62 @@ export const AddTransactionPage: React.FC = () => {
                 />
               </div>
             </div>
+            {/* Expense Detail Fields - chỉ hiển thị khi type = Expense */}
+            {form.type === 'Expense' && (
+              <div className="border-t border-gray-200 pt-5 space-y-4">
+                <h3 className="text-lg font-semibold text-gray-800">Chi tiết chi tiêu</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Category ID <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      name="categoryId"
+                      min={1}
+                      value={form.categoryId || ''}
+                      onChange={handleChange}
+                      required={form.type === 'Expense'}
+                      className="w-full border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      placeholder="1 (Housing), 2 (Food), ..."
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Ví dụ: 1=Housing, 2=Food, 3=Transportation, 4=Entertainment, 5=Shopping, 6=Others
+                    </p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Sub-category Amount <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      name="subCategoryAmount"
+                      value={form.subCategoryAmount || ''}
+                      onChange={handleChange}
+                      required={form.type === 'Expense'}
+                      className="w-full border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      placeholder="0.00"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Sub-category Name (Tùy chọn)
+                  </label>
+                  <input
+                    type="text"
+                    name="subCategoryName"
+                    value={form.subCategoryName || ''}
+                    onChange={handleChange}
+                    className="w-full border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    placeholder="Ví dụ: House Rent, Grocery, Restaurant Bill..."
+                  />
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Tài khoản</label>

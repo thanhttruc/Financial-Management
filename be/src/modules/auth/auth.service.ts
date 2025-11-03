@@ -78,23 +78,35 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
 
+    // Normalize email (lowercase) để tránh case sensitivity
+    const normalizedEmail = email.toLowerCase().trim();
+
     // Tìm user theo email, đảm bảo select được trường password (đã đặt select: false ở entity)
     const user = await this.userRepository
       .createQueryBuilder('user')
       .addSelect('user.password')
-      .where('user.email = :email', { email })
+      .where('LOWER(user.email) = :email', { email: normalizedEmail })
       .getOne();
 
     if (!user) {
+      console.log(`[AuthService] Login failed: User not found for email: ${normalizedEmail}`);
       throw new UnauthorizedException({ error: 'Email hoặc mật khẩu không đúng.' });
     }
 
     // Kiểm tra mật khẩu
+    if (!user.password) {
+      console.log(`[AuthService] Login failed: User ${user.userId} has no password`);
+      throw new UnauthorizedException({ error: 'Email hoặc mật khẩu không đúng.' });
+    }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
+      console.log(`[AuthService] Login failed: Invalid password for user ${user.userId}`);
       throw new UnauthorizedException({ error: 'Email hoặc mật khẩu không đúng.' });
     }
+
+    console.log(`[AuthService] Login successful for user: ${user.email} (ID: ${user.userId})`);
 
     // Tạo JWT token
     const accessToken = this.jwtService.sign({

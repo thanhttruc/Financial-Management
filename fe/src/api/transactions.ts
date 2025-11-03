@@ -33,6 +33,10 @@ export interface CreateTransactionRequest {
   amount: number;
   paymentMethod?: string;
   status?: 'Complete' | 'Pending' | 'Failed';
+  // Expense Detail fields (chỉ bắt buộc khi type = Expense)
+  categoryId?: number;
+  subCategoryName?: string;
+  subCategoryAmount?: number;
 }
 
 /**
@@ -41,7 +45,8 @@ export interface CreateTransactionRequest {
 export const getTransactions = async (
   type: TransactionFilterType = 'All',
   limit: number = 10,
-  offset: number = 0
+  offset: number = 0,
+  userId?: number,
 ): Promise<GetTransactionsResponse> => {
   const params = new URLSearchParams();
   if (type !== 'All') {
@@ -49,6 +54,9 @@ export const getTransactions = async (
   }
   params.append('limit', limit.toString());
   params.append('offset', offset.toString());
+  if (userId) {
+    params.append('userId', userId.toString());
+  }
 
   const response = await axiosInstance.get<GetTransactionsResponse>(
     `/v1/transactions?${params.toString()}`

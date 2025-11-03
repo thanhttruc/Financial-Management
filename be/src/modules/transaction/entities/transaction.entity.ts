@@ -6,6 +6,7 @@ import {
   OneToOne,
   JoinColumn,
   CreateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 import { Account } from '../../account/entities/account.entity';
 import { ExpenseDetail } from '../../expense-detail/entities/expense-detail.entity';
@@ -62,6 +63,9 @@ export class Transaction {
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp', nullable: true })
+  deletedAt: Date;
 
   // Quan hệ với Account
   @ManyToOne(() => Account, (account) => account.transactions)

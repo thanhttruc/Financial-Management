@@ -37,13 +37,13 @@ export const LoginPage: React.FC = () => {
     const newErrors: typeof errors = {};
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email không được để trống';
+      newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email không hợp lệ';
+      newErrors.email = 'Invalid email format';
     }
 
     if (!formData.password.trim()) {
-      newErrors.password = 'Mật khẩu không được để trống';
+      newErrors.password = 'Password is required';
     }
 
     setErrors(newErrors);
@@ -72,7 +72,7 @@ export const LoginPage: React.FC = () => {
       navigate('/');
     } catch (error: any) {
       // ✅ Nhập sai → hiển thị lỗi ổn định, GIỮ NGUYÊN formData (không reset)
-      const errorMessage = error.response?.data?.error || 'Email hoặc mật khẩu không đúng.';
+      const errorMessage = error.response?.data?.error || 'Invalid email or password.';
       setErrors({ general: errorMessage });
       setLoginAttempts(prev => prev + 1);
       // KHÔNG reset formData - email và password giữ nguyên để người dùng sửa
@@ -93,8 +93,8 @@ export const LoginPage: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900">Đăng nhập</h2>
-          <p className="mt-2 text-sm text-gray-600">Chào mừng bạn trở lại Finebank</p>
+          <h2 className="text-3xl font-bold text-gray-900">Login</h2>
+          <p className="mt-2 text-sm text-gray-600">Welcome back to Finebank</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6">
@@ -108,7 +108,7 @@ export const LoginPage: React.FC = () => {
               <div className="flex-1">
                 <p className="text-sm font-medium text-red-800">{errors.general}</p>
                 {loginAttempts > 1 && (
-                  <p className="text-xs text-red-600 mt-1">Số lần thử: {loginAttempts}</p>
+                  <p className="text-xs text-red-600 mt-1">Attempts: {loginAttempts}</p>
                 )}
               </div>
               <button
@@ -153,13 +153,13 @@ export const LoginPage: React.FC = () => {
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">Mật khẩu</label>
+              <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
               <div className="relative">
                 <input
                   id="password"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Nhập mật khẩu"
+                  placeholder="Enter password"
                   value={formData.password}
                   onChange={handleChange}
                   required
@@ -190,15 +190,15 @@ export const LoginPage: React.FC = () => {
               disabled={isLoading}
               className="w-full py-3.5 rounded-xl text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 font-semibold"
             >
-              {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+              {isLoading ? 'Logging in...' : 'Login'}
             </button>
           </form>
 
           <div className="text-center pt-2">
             <p className="text-sm text-gray-600">
-              Chưa có tài khoản?{' '}
+              Don't have an account?{' '}
               <button onClick={() => navigate('/signup')} className="text-blue-600 hover:text-blue-700 font-semibold">
-                Đăng ký ngay
+                Sign up now
               </button>
             </p>
           </div>

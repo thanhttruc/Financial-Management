@@ -5,8 +5,11 @@ import { HomePage } from '../pages/HomePage';
 import { TransactionsPage } from '../pages/TransactionsPage';
 import { AddTransactionPage } from '../pages/AddTransactionPage';
 import { AccountsPage } from '../pages/AccountsPage';
+import { AccountDetailPage } from '../pages/AccountDetailPage';
 import { CategoriesPage } from '../pages/CategoriesPage';
 import { GoalsPage } from '../pages/GoalsPage';
+import { BillsPage } from '../pages/BillsPage';
+import { ExpensesPage } from '../pages/ExpensesPage';
 import { SignUpPage } from '../pages/SignUpPage';
 import { LoginPage } from '../pages/LoginPage';
 
@@ -22,8 +25,11 @@ export const AppRouter: React.FC = () => {
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/transactions/new" element={<AddTransactionPage />} />
           <Route path="/accounts" element={<AccountsPage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/accounts/:id" element={<AccountDetailPage />} />
+          {/* <Route path="/categories" element={<CategoriesPage />} /> */}
           <Route path="/goals" element={<GoalsPage />} />
+          <Route path="/bills" element={<BillsPage />} />
+          <Route path="/expenses" element={<ExpensesPage />} />
         </Routes>
       </div>
     </BrowserRouter>

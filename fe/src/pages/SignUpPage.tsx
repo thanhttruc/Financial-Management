@@ -45,25 +45,25 @@ export const SignUpPage: React.FC = () => {
     const newErrors: typeof errors = {};
 
     if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Họ tên không được để trống';
+      newErrors.fullName = 'Full name is required';
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email không được để trống';
+      newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email không hợp lệ';
+      newErrors.email = 'Invalid email format';
     }
 
     if (!formData.password) {
-      newErrors.password = 'Mật khẩu không được để trống';
+      newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
-      newErrors.password = 'Mật khẩu phải có ít nhất 6 ký tự';
+      newErrors.password = 'Password must be at least 6 characters';
     }
 
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Xác nhận mật khẩu không được để trống';
+      newErrors.confirmPassword = 'Confirm password is required';
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Mật khẩu và xác nhận mật khẩu không trùng khớp';
+      newErrors.confirmPassword = 'Passwords do not match';
     }
 
     setErrors(newErrors);
@@ -85,16 +85,16 @@ export const SignUpPage: React.FC = () => {
 
     try {
       await register(formData);
-      // Đăng ký thành công, điều hướng về trang chủ
+      // Registration successful, redirect to home
       navigate('/');
     } catch (error: any) {
-      // Xử lý lỗi từ API
-      const errorMessage = error.response?.data?.error || error.response?.data?.message || 'Đăng ký thất bại. Vui lòng thử lại.';
+      // Handle API errors
+      const errorMessage = error.response?.data?.error || error.response?.data?.message || 'Registration failed. Please try again.';
       
       if (errorMessage.includes('already registered')) {
-        setErrors({ email: 'Email này đã được đăng ký' });
+        setErrors({ email: 'This email is already registered' });
       } else if (errorMessage.includes('do not match')) {
-        setErrors({ confirmPassword: 'Mật khẩu và xác nhận mật khẩu không trùng khớp' });
+        setErrors({ confirmPassword: 'Passwords do not match' });
       } else {
         setErrors({ general: errorMessage });
       }
@@ -114,10 +114,10 @@ export const SignUpPage: React.FC = () => {
             </svg>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
-            Chào mừng đến với Finebank
+            Welcome to Finebank
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Tạo tài khoản mới để bắt đầu quản lý tài chính của bạn
+            Create a new account to start managing your finances
           </p>
         </div>
 
@@ -139,7 +139,7 @@ export const SignUpPage: React.FC = () => {
             {/* Full Name */}
             <div>
               <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">
-                Họ tên đầy đủ
+                Full Name
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -154,7 +154,7 @@ export const SignUpPage: React.FC = () => {
                   autoComplete="name"
                   required
                   className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 outline-none text-gray-900 placeholder-gray-400"
-                  placeholder="Nhập họ tên của bạn"
+                  placeholder="Enter your full name"
                   value={formData.fullName}
                   onChange={handleChange}
                 />
@@ -205,7 +205,7 @@ export const SignUpPage: React.FC = () => {
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
-                Mật khẩu
+                Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -220,7 +220,7 @@ export const SignUpPage: React.FC = () => {
                   autoComplete="new-password"
                   required
                   className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 outline-none text-gray-900 placeholder-gray-400"
-                  placeholder="Tối thiểu 6 ký tự"
+                  placeholder="Minimum 6 characters"
                   value={formData.password}
                   onChange={handleChange}
                 />
@@ -238,7 +238,7 @@ export const SignUpPage: React.FC = () => {
             {/* Confirm Password */}
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-2">
-                Xác nhận mật khẩu
+                Confirm Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -253,7 +253,7 @@ export const SignUpPage: React.FC = () => {
                   autoComplete="new-password"
                   required
                   className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 outline-none text-gray-900 placeholder-gray-400"
-                  placeholder="Nhập lại mật khẩu"
+                  placeholder="Re-enter password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
                 />
@@ -281,10 +281,10 @@ export const SignUpPage: React.FC = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Đang tạo tài khoản...
+                    Creating account...
                   </>
                 ) : (
-                  'Tạo tài khoản'
+                  'Create Account'
                 )}
               </button>
             </div>
@@ -296,20 +296,20 @@ export const SignUpPage: React.FC = () => {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-gray-500">hoặc</span>
+              <span className="px-4 bg-white text-gray-500">or</span>
             </div>
           </div>
 
           {/* Sign In Link */}
           <div className="text-center">
             <p className="text-sm text-gray-600">
-              Đã có tài khoản?{' '}
+              Already have an account?{' '}
               <button
                 type="button"
                 onClick={() => navigate('/login')}
                 className="font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200"
               >
-                Đăng nhập ngay
+                Login now
               </button>
             </p>
           </div>
@@ -318,10 +318,10 @@ export const SignUpPage: React.FC = () => {
         {/* Footer */}
         <div className="mt-8 text-center">
           <p className="text-xs text-gray-500">
-            Bằng cách đăng ký, bạn đồng ý với{' '}
-            <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">Điều khoản sử dụng</a>
-            {' '}và{' '}
-            <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">Chính sách bảo mật</a>
+            By registering, you agree to our{' '}
+            <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">Terms of Service</a>
+            {' '}and{' '}
+            <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">Privacy Policy</a>
           </p>
         </div>
       </div>

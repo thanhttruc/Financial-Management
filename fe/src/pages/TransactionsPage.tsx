@@ -9,6 +9,10 @@ import { Loading } from '../components/Loading';
 
 export const TransactionsPage: React.FC = () => {
   const navigate = useNavigate();
+  // Lấy userId từ localStorage (đã lưu khi đăng nhập)
+  // Backend sẽ ưu tiên lấy từ JWT token, nên không bắt buộc gửi userId trong query param
+  const userIdStr = localStorage.getItem('userId');
+  const userId = userIdStr ? Number(userIdStr) : undefined;
   const [activeTab, setActiveTab] = useState<TransactionFilterType>('All');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(false);
@@ -22,7 +26,9 @@ export const TransactionsPage: React.FC = () => {
   const fetchTransactions = async (type: TransactionFilterType, currentOffset: number = 0, append: boolean = false) => {
     setLoading(true);
     try {
-      const response = await getTransactions(type, limit, currentOffset);
+      // Backend sẽ lấy userId từ JWT token tự động
+      // Gửi userId từ localStorage nếu có để tương thích ngược (không bắt buộc)
+      const response = await getTransactions(type, limit, currentOffset, userId);
       if (append) {
         setTransactions((prev) => [...prev, ...response.data]);
       } else {
@@ -85,8 +91,8 @@ export const TransactionsPage: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto py-8 px-4">
         <div className="mb-8 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-800">Giao dịch</h1>
-          <Button variant="primary" onClick={() => navigate('/transactions/new')}>+ Thêm giao dịch</Button>
+          <h1 className="text-3xl font-bold text-gray-800">Transactions</h1>
+          <Button variant="primary" onClick={() => navigate('/transactions/new')}>+ Add Transaction</Button>
         </div>
 
         {/* Tabs */}
@@ -132,7 +138,7 @@ export const TransactionsPage: React.FC = () => {
             </div>
           ) : transactions.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-500">Chưa có giao dịch nào. Bắt đầu thêm giao dịch mới!</p>
+              <p className="text-gray-500">No transactions yet. Start adding new transactions!</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -200,7 +206,7 @@ export const TransactionsPage: React.FC = () => {
                     onClick={handleLoadMore}
                     disabled={loading}
                   >
-                    {loading ? 'Đang tải...' : 'Load More'}
+                    {loading ? 'Loading...' : 'Load More'}
                   </Button>
                 </div>
               )}

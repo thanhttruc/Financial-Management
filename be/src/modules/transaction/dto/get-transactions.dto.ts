@@ -18,6 +18,13 @@ export class GetTransactionsDto {
   })
   type?: TransactionFilterType = TransactionFilterType.ALL;
 
+  // Lọc theo userId (sẽ inner join qua Accounts)
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  userId?: number;
+
   @IsOptional()
   @Type(() => Number)
   @IsInt()

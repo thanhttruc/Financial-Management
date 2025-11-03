@@ -16,6 +16,10 @@ import { Goal } from './modules/goal/entities/goal.entity';
 import { AppController } from './app.controller';
 import { AuthModule } from './modules/auth/auth.module';
 import { TransactionModule } from './modules/transaction/transaction.module';
+import { BillModule } from './modules/bill/bill.module';
+import { ExpensesModule } from './modules/expenses/expenses.module';
+import { AccountModule } from './modules/account/account.module';
+import { GoalModule } from './modules/goal/goal.module';
 
 @Module({
   imports: [
@@ -28,8 +32,20 @@ import { TransactionModule } from './modules/transaction/transaction.module';
     // Import Auth Module
     AuthModule,
 
+    // Import Account Module
+    AccountModule,
+
     // Import Transaction Module
     TransactionModule,
+
+    // Import Bill Module
+    BillModule,
+
+    // Import Expenses Module
+    ExpensesModule,
+
+    // Import Goal Module
+    GoalModule,
 
     // Cấu hình TypeORM
     TypeOrmModule.forRootAsync({
