@@ -8,6 +8,7 @@ import { ENV } from '../config/env';
 export const axiosInstance = axios.create({
   baseURL: ENV.API_BASE_URL,
   timeout: 10000,
+  withCredentials: true, // Cho phép gửi credentials trong CORS request
   headers: {
     'Content-Type': 'application/json',
   },
@@ -16,8 +17,8 @@ export const axiosInstance = axios.create({
 // Request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Thêm token nếu có
-    const token = localStorage.getItem('token');
+    // Thêm token nếu có (kiểm tra accessToken trong localStorage)
+    const token = localStorage.getItem('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -37,8 +38,11 @@ axiosInstance.interceptors.response.use(
     // Xử lý lỗi toàn cục
     if (error.response?.status === 401) {
       // Unauthorized - xóa token và redirect về login
-      localStorage.removeItem('token');
-      window.location.href = '/login';
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('user');
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }

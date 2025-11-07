@@ -113,7 +113,7 @@ npm install
 ```bash
 npm run dev
 ```
-Ứng dụng chạy tại: **http://localhost:3000**
+Ứng dụng chạy tại: **http://localhost:1574**
 
 ### 3. Build production
 ```bash

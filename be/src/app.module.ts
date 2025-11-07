@@ -15,8 +15,28 @@ import { Goal } from './modules/goal/entities/goal.entity';
 // Import controllers
 import { AppController } from './app.controller';
 
+// Import modules
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { AccountModule } from './modules/account/account.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
+import { CategoryModule } from './modules/category/category.module';
+import { BillsModule } from './modules/bill/bill.module';
+import { ExpensesModule } from './modules/expenses/expenses.module';
+import { GoalModule } from './modules/goal/goal.module';
+import { SavingsModule } from './modules/savings/savings.module';
+
 @Module({
   imports: [
+    UserModule,
+    AuthModule,
+    AccountModule,
+    TransactionModule,
+    CategoryModule,
+    BillsModule,
+    ExpensesModule,
+    GoalModule,
+    SavingsModule,
     // Cấu hình ConfigModule để đọc biến môi trường
     ConfigModule.forRoot({
       isGlobal: true,

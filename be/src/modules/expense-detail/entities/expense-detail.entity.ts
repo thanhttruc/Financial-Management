@@ -22,9 +22,6 @@ export class ExpenseDetail {
   @Column({ name: 'category_id' })
   categoryId: number;
 
-  @Column({ name: 'sub_category_name', length: 100, nullable: true })
-  subCategoryName: string;
-
   @Column({
     name: 'sub_category_amount',
     type: 'decimal',

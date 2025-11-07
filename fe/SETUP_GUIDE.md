@@ -20,7 +20,7 @@
 Tạo file `.env` trong thư mục `fe/`:
 
 ```env
-VITE_API_BASE_URL=http://localhost:3000/api
+VITE_API_BASE_URL=http://localhost:1574/api
 VITE_APP_NAME=Financial Management
 ```
 
@@ -31,11 +31,11 @@ cd fe
 npm run dev
 ```
 
-Ứng dụng sẽ chạy tại: **http://localhost:5173**
+Ứng dụng sẽ chạy tại: **http://localhost:5174**
 
 ### 3. Kết nối với Backend
 
-Đảm bảo backend NestJS đang chạy tại `http://localhost:3000/api`.
+Đảm bảo backend NestJS đang chạy tại `http://localhost:8000/api`.
 
 ## 📁 Cấu trúc đã tạo
 

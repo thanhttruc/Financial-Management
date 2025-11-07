@@ -1,17 +1,25 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ENV } from '../config/env';
+import { Button } from './Button';
+import { LogoutButton } from './LogoutButton';
 
 export const Navigation: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path: string) => location.pathname === path;
+
+  // Kiểm tra trạng thái đăng nhập dựa trên accessToken trong localStorage
+  const isLoggedIn = !!localStorage.getItem('accessToken');
 
   const navItems = [
     { path: '/', label: 'Trang chủ', icon: '🏠' },
     { path: '/transactions', label: 'Giao dịch', icon: '💰' },
     { path: '/accounts', label: 'Tài khoản', icon: '💳' },
-    { path: '/categories', label: 'Danh mục', icon: '📁' },
+    { path: '/expenses', label: 'Chi tiêu', icon: '📊' },
+    { path: '/bills', label: 'Hóa đơn', icon: '📋' },
+    // { path: '/categories', label: 'Danh mục', icon: '📁' },
     { path: '/goals', label: 'Mục tiêu', icon: '🎯' },
   ];
 
@@ -40,6 +48,20 @@ export const Navigation: React.FC = () => {
                 </Link>
               ))}
             </div>
+          </div>
+
+          {/* Button đăng nhập hoặc đăng xuất ở góc phải */}
+          <div className="flex items-center">
+            {isLoggedIn ? (
+              <LogoutButton />
+            ) : (
+              <Button
+                variant="primary"
+                onClick={() => navigate('/login')}
+              >
+                Đăng nhập
+              </Button>
+            )}
           </div>
         </div>
       </div>

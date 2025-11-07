@@ -1,5 +1,5 @@
 -- Tạo database
-CREATE DATABASE financial;
+-- CREATE DATABASE financial;
 USE financial;
 -- 1. Bảng Users (Người Dùng)
 CREATE TABLE Users (
@@ -7,12 +7,15 @@ CREATE TABLE Users (
     full_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
     phone_number VARCHAR(20),
     profile_picture_url VARCHAR(255),
-    total_balance DECIMAL(15, 2) DEFAULT 0.00
+    total_balance DECIMAL(15, 2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--------------------------------------------------------------------------------
+
 
 -- 2. Bảng Accounts (Tài Khoản)`
 CREATE TABLE Accounts (
@@ -27,7 +30,6 @@ CREATE TABLE Accounts (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
--------------------------------------------------------------------------------
 
 -- 3. Bảng Transactions (Giao Dịch)
 CREATE TABLE Transactions (
@@ -44,7 +46,6 @@ CREATE TABLE Transactions (
     FOREIGN KEY (account_id) REFERENCES Accounts(account_id)
 );
 
--------------------------------------------------------------------------------
 
 -- 4. Bảng Categories (Danh Mục Chi Tiêu)
 CREATE TABLE Categories (
@@ -53,22 +54,20 @@ CREATE TABLE Categories (
     -- Ví dụ: Housing, Food, Transportation, Entertainment, Shopping, Others
 );
 
--------------------------------------------------------------------------------
 
 -- 5. Bảng ExpenseDetails (Chi Tiết Chi Tiêu)
 -- Bảng này liên kết giao dịch chi tiêu với danh mục
+-- Lưu ý: item_description được lấy từ bảng Transactions thông qua quan hệ one-to-one
 CREATE TABLE ExpenseDetails (
     expense_detail_id INT AUTO_INCREMENT PRIMARY KEY,
     transaction_id INT UNIQUE NOT NULL, -- UNIQUE vì mỗi giao dịch chỉ thuộc 1 danh mục chính
     category_id INT NOT NULL,
-    sub_category_name VARCHAR(100), -- Ví dụ: House Rent, Grocery
     sub_category_amount DECIMAL(10, 2) NOT NULL, 
     -- Dùng cho các báo cáo phân tích chi tiêu
     FOREIGN KEY (transaction_id) REFERENCES Transactions(transaction_id),
     FOREIGN KEY (category_id) REFERENCES Categories(category_id)
 );
 
--------------------------------------------------------------------------------
 
 -- 6. Bảng Bills (Hóa Đơn Sắp Tới)
 CREATE TABLE Bills (
@@ -82,7 +81,6 @@ CREATE TABLE Bills (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
--------------------------------------------------------------------------------
 
 -- 7. Bảng Goals (Mục Tiêu Tiết Kiệm/Chi Tiêu)
 CREATE TABLE Goals (

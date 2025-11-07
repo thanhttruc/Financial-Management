@@ -88,7 +88,7 @@ npm install
 npm run dev
 ```
 
-Truy cập: **http://localhost:5173**
+Truy cập: **http://localhost:5174**
 
 ## 📝 Notes
 
@@ -109,7 +109,7 @@ Truy cập: **http://localhost:5173**
 
 ## 🔌 API Integration
 
-API base URL: `http://localhost:3000/api`
+API base URL: `http://localhost:8000/api`
 
 Axios instance với:
 - Auto Authorization header

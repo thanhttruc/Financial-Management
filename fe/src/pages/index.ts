@@ -1,5 +1,9 @@
 export { HomePage } from './HomePage';
 export { TransactionsPage } from './TransactionsPage';
 export { AccountsPage } from './AccountsPage';
+export { BillsPage } from './BillsPage';
+export { ExpensesPage } from './ExpensesPage';
 export { CategoriesPage } from './CategoriesPage';
 export { GoalsPage } from './GoalsPage';
+export { LoginPage } from './LoginPage';
+export { RegisterPage } from './RegisterPage';

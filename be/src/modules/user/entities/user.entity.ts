@@ -24,6 +24,9 @@ export class User {
   @Column({ length: 50, unique: true })
   username: string;
 
+  @Column({ length: 255, select: false })
+  password: string;
+
   @Column({ name: 'phone_number', length: 20, nullable: true })
   phoneNumber: string;
 

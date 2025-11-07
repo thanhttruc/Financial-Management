@@ -86,7 +86,8 @@ be/
 - Quan hệ: ExpenseDetail[], Goal[]
 
 ### 5. **ExpenseDetail Entity** (`src/modules/expense-detail/entities/expense-detail.entity.ts`)
-- Trường: expenseDetailId, transactionId, categoryId, subCategoryName, subCategoryAmount
+- Trường: expenseDetailId, transactionId, categoryId, subCategoryAmount
+- Lưu ý: itemDescription được lấy từ bảng Transactions thông qua quan hệ one-to-one
 - Quan hệ: Transaction (one-to-one), Category (many-to-one)
 
 ### 6. **Bill Entity** (`src/modules/bill/entities/bill.entity.ts`)
@@ -159,7 +160,7 @@ DB_USERNAME=root
 DB_PASSWORD=
 DB_DATABASE=financial
 PORT=8000
-CORS_ORIGIN=http://localhost:3000
+CORS_ORIGIN=http://localhost:8000
 ```
 
 Chỉnh sửa theo setup của bạn.

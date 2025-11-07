@@ -43,7 +43,7 @@ npm install
 Tạo file `.env` (copy từ `.env.example`):
 
 ```env
-VITE_API_BASE_URL=http://localhost:3000/api
+VITE_API_BASE_URL=http://localhost:1574/api
 VITE_APP_NAME=Financial Management
 ```
 
@@ -53,7 +53,7 @@ VITE_APP_NAME=Financial Management
 npm run dev
 ```
 
-Ứng dụng sẽ chạy tại: `http://localhost:5173`
+Ứng dụng sẽ chạy tại: `http://localhost:5174`
 
 ### 4. Build production
 
@@ -123,5 +123,5 @@ const transactions = await getTransactions(1, 10);
 
 ## 🔗 Liên kết
 
-- Backend API: `http://localhost:3000/api`
-- Frontend Dev: `http://localhost:5173`
+- Backend API: `http://localhost:8000/api`
+- Frontend Dev: `http://localhost:5174`

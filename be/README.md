@@ -90,7 +90,7 @@ PORT=8000
 NODE_ENV=development
 
 # CORS
-CORS_ORIGIN=http://localhost:3000
+CORS_ORIGIN=http://localhost:1574
 ```
 
 ### TypeORM Configuration
