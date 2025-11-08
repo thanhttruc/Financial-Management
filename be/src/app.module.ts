@@ -15,6 +15,9 @@ import { Goal } from './modules/goal/entities/goal.entity';
 // Import controllers
 import { AppController } from './app.controller';
 
+// Import modules
+import { AuthModule } from './modules/auth/auth.module';
+
 @Module({
   imports: [
     // Cấu hình ConfigModule để đọc biến môi trường
@@ -52,6 +55,8 @@ import { AppController } from './app.controller';
       },
       inject: [ConfigService],
     }),
+    // Auth Module
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [],

@@ -6,20 +6,34 @@ import { TransactionsPage } from '../pages/TransactionsPage';
 import { AccountsPage } from '../pages/AccountsPage';
 import { CategoriesPage } from '../pages/CategoriesPage';
 import { GoalsPage } from '../pages/GoalsPage';
+import { LoginPage } from '../pages/LoginPage';
+import { RegistrationPage } from '../pages/RegistrationPage';
+import { NotFoundPage } from '../pages/NotFoundPage';
 
 export const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-50">
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/transactions" element={<TransactionsPage />} />
-          <Route path="/accounts" element={<AccountsPage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/goals" element={<GoalsPage />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegistrationPage />} />
+        <Route
+          path="/"
+          element={
+            <div className="min-h-screen bg-gray-50">
+              <Navigation />
+              <Routes>
+                <Route index element={<HomePage />} />
+                <Route path="transactions" element={<TransactionsPage />} />
+                <Route path="accounts" element={<AccountsPage />} />
+                <Route path="categories" element={<CategoriesPage />} />
+                <Route path="goals" element={<GoalsPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </div>
+          }
+        />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </BrowserRouter>
   );
 };

@@ -1,20 +1,22 @@
 -- Tạo database
-CREATE DATABASE financial;
-USE financial;
+DROP DATABASE IF EXISTS financial1;
+CREATE DATABASE financial1;
+USE financial1;
 -- 1. Bảng Users (Người Dùng)
 CREATE TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
     phone_number VARCHAR(20),
     profile_picture_url VARCHAR(255),
     total_balance DECIMAL(15, 2) DEFAULT 0.00
 );
 
--------------------------------------------------------------------------------
-
--- 2. Bảng Accounts (Tài Khoản)`
+-- ============================================
+-- 2. Bảng Accounts (Tài Khoản)
+-- ============================================
 CREATE TABLE Accounts (
     account_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -27,9 +29,9 @@ CREATE TABLE Accounts (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
--------------------------------------------------------------------------------
-
+-- ============================================
 -- 3. Bảng Transactions (Giao Dịch)
+-- ============================================
 CREATE TABLE Transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     account_id INT NOT NULL,
@@ -44,18 +46,18 @@ CREATE TABLE Transactions (
     FOREIGN KEY (account_id) REFERENCES Accounts(account_id)
 );
 
--------------------------------------------------------------------------------
-
+-- ============================================
 -- 4. Bảng Categories (Danh Mục Chi Tiêu)
+-- ============================================
 CREATE TABLE Categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(50) UNIQUE NOT NULL 
     -- Ví dụ: Housing, Food, Transportation, Entertainment, Shopping, Others
 );
 
--------------------------------------------------------------------------------
-
+-- ============================================
 -- 5. Bảng ExpenseDetails (Chi Tiết Chi Tiêu)
+-- ============================================
 -- Bảng này liên kết giao dịch chi tiêu với danh mục
 CREATE TABLE ExpenseDetails (
     expense_detail_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -68,9 +70,9 @@ CREATE TABLE ExpenseDetails (
     FOREIGN KEY (category_id) REFERENCES Categories(category_id)
 );
 
--------------------------------------------------------------------------------
-
+-- ============================================
 -- 6. Bảng Bills (Hóa Đơn Sắp Tới)
+-- ============================================
 CREATE TABLE Bills (
     bill_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -82,9 +84,9 @@ CREATE TABLE Bills (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
--------------------------------------------------------------------------------
-
+-- ============================================
 -- 7. Bảng Goals (Mục Tiêu Tiết Kiệm/Chi Tiêu)
+-- ============================================
 CREATE TABLE Goals (
     goal_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,

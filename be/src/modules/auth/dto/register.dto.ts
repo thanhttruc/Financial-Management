@@ -1,0 +1,24 @@
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+
+/**
+ * DTO cho request đăng ký
+ */
+export class RegisterDto {
+  @IsString()
+  @IsNotEmpty({ message: 'Họ và tên là bắt buộc' })
+  fullName: string;
+
+  @IsEmail({}, { message: 'Email không hợp lệ' })
+  @IsNotEmpty({ message: 'Email là bắt buộc' })
+  email: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Mật khẩu là bắt buộc' })
+  @MinLength(6, { message: 'Mật khẩu phải có ít nhất 6 ký tự' })
+  password: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Xác nhận mật khẩu là bắt buộc' })
+  confirmPassword: string;
+}
+

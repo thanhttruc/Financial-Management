@@ -19,7 +19,7 @@ export class AppController {
     };
   }
 
-  @Get('api/health')
+  @Get('health')
   @ApiOperation({ summary: 'Check server health status' })
   @ApiResponse({ status: 200, description: 'Server health check' })
   healthCheck() {
